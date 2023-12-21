@@ -95,36 +95,30 @@ async function saveAnnoncesToFile(annonces) {
     try {
         let existingAnnonces = [];
 
-        // Vérifier si le fichier existe avant de le lire.
-        if (fs.existsSync(filePath)) {
+        // Si le fichier n'existe pas, créez-le avec les annonces actuelles.
+        if (!fs.existsSync(filePath)) {
+            fs.writeFileSync(filePath, JSON.stringify(annonces, null, 2), 'utf-8');
+            console.log('Fichier annonces.json créé avec les annonces actuelles.');
+        } else {
+            // Le fichier existe, lisez-le et comparez les annonces existantes avec les nouvelles.
             const data = fs.readFileSync(filePath, 'utf-8');
             existingAnnonces = JSON.parse(data);
-        }
 
-        // Comparer les annonces existantes avec les nouvelles.
-        if (JSON.stringify(existingAnnonces) !== JSON.stringify(annonces)) {
-            // Les données sont différentes, mettre à jour le fichier.
-            fs.writeFileSync(filePath, JSON.stringify(annonces, null, 2), 'utf-8'); // Utilisation de writeFileSync pour une gestion simplifiée des erreurs
-            console.log('Annonces mises à jour dans le fichier.');
-        } else {
-            console.log('Aucune mise à jour nécessaire.');
+            if (JSON.stringify(existingAnnonces) !== JSON.stringify(annonces)) {
+                fs.writeFileSync(filePath, JSON.stringify(annonces, null, 2), 'utf-8');
+                console.log('Annonces mises à jour dans le fichier.');
+            } else {
+                console.log('Aucune mise à jour nécessaire.');
+            }
         }
     } catch (err) {
-        // Gérer les erreurs de lecture, de parsing, ou d'écriture.
+        // Gérer les erreurs d'écriture/lecture.
         console.error('Erreur lors de la manipulation du fichier:', err);
     }
 }
-async function main() {
-    try {
-        const annonces = await fetchAnnonces();
-        console.log("Annonces récupérées :", annonces.length, "annonces");
-        await saveAnnoncesToFile(annonces); // Assurez-vous que cette opération est complétée avant de continuer
-        console.log('Scrapping terminé et fichier mis à jour.');
-    } catch (error) {
-        console.error("Une erreur s'est produite lors du scrapping :", error);
-    } finally {
-        fs.writeFileSync('scrapping_done.flag', 'done'); // Marqueur de fin de scrapping
-    }
-}
 
-main();
+module.exports = {
+    fetchAnnonces,
+    saveAnnoncesToFile,
+    main
+};
