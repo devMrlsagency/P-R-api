@@ -35,7 +35,7 @@ async function fetchAnnonces() {
 
             // Attendre que le popup de cookies soit visible et le refuser
             try {
-                await page.waitForSelector('.tarteaucitronCTAButton.tarteaucitronDeny', { timeout: 10000 });
+                await page.waitForSelector('.tarteaucitronCTAButton.tarteaucitronDeny', { timeout: 60000 });
                 await page.click('.tarteaucitronCTAButton.tarteaucitronDeny');
                 console.log("Popup de cookies géré.");
             } catch (e) {
