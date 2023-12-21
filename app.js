@@ -6,9 +6,6 @@ const fs = require('fs');
 
 require('dotenv').config();
 
-// Assurez-vous d'importer la fonction main depuis le fichier de scrapping si nécessaire
-// const { main } = require('./path-to-your-scrapping-module');
-
 const middlewares = require('./middlewares');
 const app = express();
 
@@ -21,18 +18,30 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/annonces', async (req, res) => {
-    // Vérifiez si les données sont en cache et toujours valides
-    if (cacheTime && cacheTime > Date.now() - (1000 * 60 * 60)) { // 1 heure en millisecondes
-        return res.json(data);
-    }
-data = await main();
-    
-    // Mettez à jour le cacheTime après la mise à jour des données
-    cacheTime = Date.now();
+    // if (cacheTime && cacheTime > Date.now() - (1000 * 30)) {
+    //     return res.json(data);
+    // }
 
+    const filePath = './annonces.json';
+    fs.readFile(filePath, 'utf-8', (err, fileData) => {
+        if (err) {
+            console.error('Erreur lors de la lecture du fichier:', err);
+            return res.status(500).send('Erreur lors de la lecture du fichier');
+        }
 
-    res.json(data);
+        try {
+            data = JSON.parse(fileData);
+        } catch (parseError) {
+            console.error('Erreur lors de l\'analyse du JSON:', parseError);
+            // Vous pouvez choisir de renvoyer une réponse vide ou un message d'erreur
+            data = [];  // ou { message: "Erreur lors de l'analyse des données" };
+        }
+
+        cacheTime = Date.now();
+        res.json(data);
+    });
 });
+
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
