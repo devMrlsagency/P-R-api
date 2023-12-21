@@ -91,31 +91,29 @@ module.exports = fetchAnnonces;
 
 async function saveAnnoncesToFile(annonces) {
     const filePath = './annonces.json';
-    // Essayer de lire les annonces existantes.
+    
     try {
-        const data = fs.readFileSync(filePath, 'utf-8');
-        const existingAnnonces = JSON.parse(data);
+        let existingAnnonces = [];
+
+        // Vérifier si le fichier existe avant de le lire.
+        if (fs.existsSync(filePath)) {
+            const data = fs.readFileSync(filePath, 'utf-8');
+            existingAnnonces = JSON.parse(data);
+        }
 
         // Comparer les annonces existantes avec les nouvelles.
         if (JSON.stringify(existingAnnonces) !== JSON.stringify(annonces)) {
             // Les données sont différentes, mettre à jour le fichier.
-            fs.writeFile(filePath, JSON.stringify(annonces, null, 2), 'utf-8', (err) => {
-                if (err) console.error('Erreur lors de l\'écriture du fichier :', err);
-                else console.log('Annonces mises à jour dans le fichier.');
-            });
+            fs.writeFileSync(filePath, JSON.stringify(annonces, null, 2), 'utf-8'); // Utilisation de writeFileSync pour une gestion simplifiée des erreurs
+            console.log('Annonces mises à jour dans le fichier.');
         } else {
             console.log('Aucune mise à jour nécessaire.');
         }
     } catch (err) {
-        // En cas d'erreur de lecture ou de parsing, écrire les nouvelles annonces.
-        console.error('Erreur lors de la lecture du fichier existant, réécriture avec de nouvelles annonces :', err);
-        fs.writeFile(filePath, JSON.stringify(annonces, null, 2), 'utf-8', (err) => {
-            if (err) console.error('Erreur lors de l\'écriture du fichier :', err);
-            else console.log('Annonces sauvegardées dans le fichier.');
-        });
+        // Gérer les erreurs de lecture, de parsing, ou d'écriture.
+        console.error('Erreur lors de la manipulation du fichier:', err);
     }
 }
-
 async function main() {
     try {
         const annonces = await fetchAnnonces();
