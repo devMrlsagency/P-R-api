@@ -5,6 +5,7 @@ const cors = require('cors');
 const fs = require('fs');
 
 require('dotenv').config();
+const { main } = require('./scrapping');
 
 const middlewares = require('./middlewares');
 const app = express();
