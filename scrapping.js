@@ -4,7 +4,7 @@ const puppeteerConfig = require('./puppeteer.config.cjs');
 
 
 async function fetchAnnonces() {
-  const browser = await puppeteer.launch(puppeteerConfig.launch);
+  const browser = await puppeteer.launch(puppeteerConfig.launch); 
 
     const pages = await Promise.all([
         browser.newPage(),
