@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const fs = require('fs');
+const path = require('path'); // Ajout du module 'path'
 
 require('dotenv').config();
 
@@ -23,10 +24,13 @@ app.get('/annonces', async (req, res) => {
     // }
 
     const filePath = './annonces.json';
+    console.log("Répertoire de travail actuel:", process.cwd()); // Afficher le répertoire de travail actuel
+    console.log("Chemin complet du fichier:", path.join(process.cwd(), filePath)); // Afficher le chemin complet du fichier
+
     fs.readFile(filePath, 'utf-8', (err, fileData) => {
         if (err) {
             console.error('Erreur lors de la lecture du fichier:', err);
-            return res.status(500).send('Erreur lors de la lecture du fichier');
+            return res.status(500).send('Erreur lors de la lecture du fichier: ' + err.message);
         }
 
         try {
