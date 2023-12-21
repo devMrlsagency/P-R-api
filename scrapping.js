@@ -62,7 +62,7 @@ async function fetchAnnonces() {
                   });
 
                     annonces.push({
-                        img: element.querySelector('.picture img')?.src,
+                        img: element.querySelector('.photo img')?.src,
                         title: element.querySelector('.type_bien').textContent,
                         smallTitle: element.querySelector('.pieces')?.textContent.trim(),
                         localisation: element.querySelector('.localisation')?.textContent.trim(),
