@@ -14,7 +14,7 @@ async function fetchAnnonces() {
       process.env.NODE_ENV === "production"
         ? process.env.PUPPETEER_EXECUTABLE_PATH
         : puppeteer.executablePath(),
-});
+  });
 
     const pages = await Promise.all([
         browser.newPage(),
@@ -31,7 +31,8 @@ async function fetchAnnonces() {
     const annonces = await Promise.all(
         pageUrls.map(async (pageUrl, index) => {
             const page = pages[index];
-            await page.goto(pageUrl);
+           await page.goto(pageUrl, { timeout: 60000 });
+
 
             // Attendre que le popup de cookies soit visible et le refuser
             try {
