@@ -29,7 +29,7 @@ data = await main();
     
     // Mettez à jour le cacheTime après la mise à jour des données
     cacheTime = Date.now();
-    data = ...; // Les données actualisées
+
 
     res.json(data);
 });
