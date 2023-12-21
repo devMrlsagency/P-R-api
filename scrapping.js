@@ -14,12 +14,14 @@ async function fetchAnnonces() {
         browser.newPage(),
         browser.newPage(),
         browser.newPage(),
+        browser.newPage(),
     ]);
 
     const pageUrls = [
         `https://www.immobilier.notaires.fr/fr/annonces-immobilieres-liste?page=1&parPage=100&departement=73&typeTransaction=VENTE,VNI,VAE,LOCATION`,
         `https://www.immobilier.notaires.fr/fr/annonces-immobilieres-liste?page=2&parPage=100&departement=73&typeTransaction=VENTE,VNI,VAE,LOCATION`,
         `https://www.immobilier.notaires.fr/fr/annonces-immobilieres-liste?page=3&parPage=100&departement=73&typeTransaction=VENTE,VNI,VAE,LOCATION`,
+     `https://www.immobilier.notaires.fr/fr/annonces-immobilieres-liste?page=4&parPage=100&departement=73&typeTransaction=VENTE,VNI,VAE,LOCATION`,
     ];
 
     const annonces = await Promise.all(
