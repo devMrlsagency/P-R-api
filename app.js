@@ -34,7 +34,7 @@ app.get('/annonces', async (req, res) => {
         } catch (parseError) {
             console.error('Erreur lors de l\'analyse du JSON:', parseError);
             // Vous pouvez choisir de renvoyer une réponse vide ou un message d'erreur
-            data = [];  // ou { message: "Erreur lors de l'analyse des données" };
+            data = [];  
         }
 
         cacheTime = Date.now();
