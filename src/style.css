@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+}
+.header, .footer {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+.container {
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.annonce-card {
+   
+    margin-bottom: 20px;
+    flex: 0 32%;
+    margin-top: 20px;
+}
+.annonce-card img {
+    width: 224px;
+    height: 220px;
+    display: block;
+}
+.annonce-details {
+    padding-top: 15px;
+    font-size: 0.9em;
+    border-top: 1px solid #eee;
+}
+ h3 {
+    color: #1C9AD7;
+font-family: Inter;
+font-size: 10px;
+font-style: normal;
+font-weight: 700;
+line-height: 28px; /* 280% */
+text-transform: uppercase;
+margin: 0pxn;
+}
+.prix {
+    color: #224665;
+font-family: Inter;
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: 28px;
+margin:0px
+}
+p {
+color: #585858;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 20px; /* 142.857% */
+margin: 0px;
+}
+.pagination {
+    text-align: center;
+    padding: 20px 0;
+}
+.pagination a {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 5px;
+}
+.pagination a.active {
+    font-weight: bold;
+}
+@media screen and (max-width: 1024px) {
+    .annonce-card {
+        flex: 0 48%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .annonce-card {
+        flex: 0 100%;
+    }
+}
+
+#filterForm {
+    margin-bottom: 20px;
+}
+#filterForm label {
+    margin-right: 10px;
+}
