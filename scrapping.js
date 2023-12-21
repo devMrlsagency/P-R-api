@@ -3,8 +3,7 @@ const fs = require('fs');
 const puppeteerConfig = require('./puppeteer.config.cjs');
 
 async function fetchAnnonces() {
-  // Lancement de Puppeteer et opérations spécifiques à Puppeteer
-  await runPuppeteer();
+
 
   const browser = await puppeteer.launch({
     args: [
@@ -120,11 +119,16 @@ async function saveAnnoncesToFile(annonces) {
 }
 
 async function main() {
-    const annonces = await fetchAnnonces();
-    console.log("Annonces récupérées :", annonces.length, "annonces"); // Ajoutez ceci pour vérifier le nombre d'annonces récupérées
-    await saveAnnoncesToFile(annonces);
-    fs.writeFileSync('scrapping_done.flag', 'done'); // Marqueur de fin de scrapping
-    console.log('Scrapping terminé et fichier mis à jour.');
+    try {
+        const annonces = await fetchAnnonces();
+        console.log("Annonces récupérées :", annonces.length, "annonces");
+        await saveAnnoncesToFile(annonces); // Assurez-vous que cette opération est complétée avant de continuer
+        console.log('Scrapping terminé et fichier mis à jour.');
+    } catch (error) {
+        console.error("Une erreur s'est produite lors du scrapping :", error);
+    } finally {
+        fs.writeFileSync('scrapping_done.flag', 'done'); // Marqueur de fin de scrapping
+    }
 }
 
 main();
