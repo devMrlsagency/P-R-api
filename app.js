@@ -25,10 +25,8 @@ app.get('/annonces', async (req, res) => {
     if (cacheTime && cacheTime > Date.now() - (1000 * 60 * 60)) { // 1 heure en millisecondes
         return res.json(data);
     }
-
-    // Ajoutez ici votre logique de mise à jour des données
-    // Par exemple : data = await main();
-
+data = await main();
+    
     // Mettez à jour le cacheTime après la mise à jour des données
     cacheTime = Date.now();
     data = ...; // Les données actualisées
