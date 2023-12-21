@@ -3,6 +3,9 @@ const fs = require('fs');
 const puppeteerConfig = require('./puppeteer.config.cjs');
 
 async function fetchAnnonces() {
+  // Lancement de Puppeteer et opérations spécifiques à Puppeteer
+  await runPuppeteer();
+
   const browser = await puppeteer.launch({
     args: [
       "--disable-setuid-sandbox",
