@@ -116,6 +116,18 @@ async function saveAnnoncesToFile(annonces) {
         console.error('Erreur lors de la manipulation du fichier:', err);
     }
 }
+async function main() {
+    try {
+        const annonces = await fetchAnnonces();
+        console.log("Annonces récupérées :", annonces.length, "annonces");
+        await saveAnnoncesToFile(annonces); // Assurez-vous que cette opération est complétée avant de continuer
+        console.log('Scrapping terminé et fichier mis à jour.');
+    } catch (error) {
+        console.error("Une erreur s'est produite lors du scrapping :", error);
+    } finally {
+        fs.writeFileSync('scrapping_done.flag', 'done'); // Marqueur de fin de scrapping
+    }
+}
 
 module.exports = {
     fetchAnnonces,
