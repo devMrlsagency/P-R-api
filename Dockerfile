@@ -16,4 +16,4 @@ RUN npm ci
 COPY . .
 
 # Commande par défaut pour exécuter votre script Node.js (remplacez "index.js" par le nom de votre fichier de scrapping)
-CMD [ "node", "scrapping.js" ]
+CMD [ "node", "index.js" ]
