@@ -20,5 +20,9 @@ USER pptruser
 # Copiez tout le contenu de votre projet dans le conteneur
 COPY . .
 
+# Changez la propriété de tous les fichiers pour pptruser
+RUN chown -R pptruser:pptruser /usr/src/app
+
+
 # Commande par défaut pour exécuter votre script Node.js (remplacez "index.js" par le nom de votre fichier de scrapping)
 CMD [ "node", "index.js" ]
