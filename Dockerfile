@@ -12,7 +12,10 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci
 
-# Définissez l'utilisateur avant de copier les fichiers
+# Créez l'utilisateur pptruser si ce dernier n'existe pas
+RUN useradd -m pptruser || true
+
+# Définissez l'utilisateur pptruser avant de copier les fichiers
 USER pptruser
 # Copiez tout le contenu de votre projet dans le conteneur
 COPY . .
