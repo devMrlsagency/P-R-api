@@ -44,7 +44,7 @@ setInterval(() => {
     main()
         .then(() => console.log('Scrapping terminé avec succès'))
         .catch((error) => console.error('Erreur lors du scrapping:', error));
-}, 360000); // 180000 millisecondes correspondent à 3 minutes
+}, 60000); // 180000 millisecondes correspondent à 3 minutes
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
