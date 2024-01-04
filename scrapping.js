@@ -42,12 +42,13 @@ async function fetchAnnonces() {
     const annonces = await Promise.all(
         pageUrls.map(async (pageUrl, index) => {
             const page = pages[index];
-           await page.goto(pageUrl, { timeout: 60000 });
+         
 
 
             // Attendre que le popup de cookies soit visible et le refuser
-            try {
-                await page.waitForSelector('.tarteaucitronCTAButton.tarteaucitronDeny', { timeout: 60000 });
+            try {await page.goto(pageUrl, { timeout: 120000 }); // Augmentez à 120 secondes
+
+                await page.waitForSelector('.tarteaucitronCTAButton.tarteaucitronDeny', { timeout: 120000 });
                 await page.click('.tarteaucitronCTAButton.tarteaucitronDeny');
                 console.log("Popup de cookies géré.");
             } catch (e) {
