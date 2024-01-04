@@ -2,16 +2,22 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
-const fs = require('fs');
+const mongoose = require('mongoose'); // Ajoutez Mongoose
 
 require('dotenv').config();
 
 const middlewares = require('./middlewares');
 const { main } = require('./scrapping');
 
+const Annonce = require('./models/annonce'); // Assurez-vous que le chemin est correct
+
 const app = express();
-let cacheTime;
-let data;
+
+// Configuration et connexion à MongoDB avec Mongoose
+const uri = process.env.MONGODB_URI;
+mongoose.connect(uri, { serverSelectionTimeoutMS: 30000 })
+  .then(() => console.log('Connexion à MongoDB réussie !'))
+  .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use(morgan('dev'));
 app.use(helmet());
@@ -19,32 +25,26 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/annonces', async (req, res) => {
-    const filePath = './annonces.json';
-    fs.readFile(filePath, 'utf-8', (err, fileData) => {
-        if (err) {
-            console.error('Erreur lors de la lecture du fichier:', err);
-            return res.status(500).send('Erreur lors de la lecture du fichier');
-        }
-
-        try {
-            data = JSON.parse(fileData);
-        } catch (parseError) {
-            console.error('Erreur lors de l\'analyse du JSON:', parseError);
-            data = [];
-        }
-
-        cacheTime = Date.now();
-        res.json(data);
-    });
+    try {
+        // Récupérer toutes les annonces via Mongoose
+        const annoncesList = await Annonce.find({});
+        
+        res.json(annoncesList);
+    } catch (e) {
+        console.error('Erreur lors de la récupération des annonces:', e);
+        res.status(500).send('Erreur lors de la récupération des annonces');
+    }
 });
 
 // Planification du scrapping toutes les 3 minutes
+// Planification du scrapping toutes les 3 minutes
+// Votre logique pour appeler main à intervalles réguliers
 setInterval(() => {
     console.log('Lancement du scrapping à', new Date());
-    main()
-        .then(() => console.log('Scrapping terminé avec succès'))
-        .catch((error) => console.error('Erreur lors du scrapping:', error));
-}, 60000); // 180000 millisecondes correspondent à 3 minutes
+    main().catch(error => {
+        console.error('Erreur lors du scrapping:', error);
+    });
+}, 180000); // toutes les 3 minutes
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
