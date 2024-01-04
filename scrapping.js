@@ -42,11 +42,11 @@ async function fetchAnnonces() {
     const annonces = await Promise.all(
         pageUrls.map(async (pageUrl, index) => {
             const page = pages[index];
-         
+            await page.goto(pageUrl, { timeout: 120000 });
 
 
             // Attendre que le popup de cookies soit visible et le refuser
-            try {await page.goto(pageUrl, { timeout: 120000 }); // Augmentez à 120 secondes
+            try {
 
                 await page.waitForSelector('.tarteaucitronCTAButton.tarteaucitronDeny', { timeout: 120000 });
                 await page.click('.tarteaucitronCTAButton.tarteaucitronDeny');
@@ -54,7 +54,7 @@ async function fetchAnnonces() {
             } catch (e) {
                 console.log("Le popup de cookies n'est pas apparu ou le clic a échoué.");
             }
-            await page.waitForSelector('inotr-bloc-annonce', {timeout: 60000}); // Attend jusqu'à 60 secondes.
+            await page.waitForSelector('inotr-bloc-annonce', {timeout: 120000}); // Attend jusqu'à 60 secondes.
 
 
             const annoncesPage = await page.evaluate(() => {
