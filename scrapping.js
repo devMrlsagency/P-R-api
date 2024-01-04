@@ -1,6 +1,9 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const puppeteerConfig = require('./puppeteer.config.cjs');
+const Annonce = require('./models/annonce'); // Assurez-vous que le chemin est correct
+const mongoose = require('mongoose');
+
 
 async function fetchAnnonces() {
 
@@ -20,12 +23,20 @@ async function fetchAnnonces() {
 
     const pages = await Promise.all([
         browser.newPage(),
+        browser.newPage(),
+        browser.newPage(),
+      
+
         
     ]);
 
     const pageUrls = [
-        `https://www.immobilier.notaires.fr/fr/annonces-immobilieres-liste?page=1&parPage=10&departement=73&typeTransaction=VENTE,VNI,VAE,LOCATION`,
-     
+        `https://www.immobilier.notaires.fr/fr/annonces-immobilieres-liste?page=1&parPage=100&departement=73&typeTransaction=VENTE,VNI,VAE,LOCATION`,
+        `https://www.immobilier.notaires.fr/fr/annonces-immobilieres-liste?page=2&parPage=100&departement=73&typeTransaction=VENTE,VNI,VAE,LOCATION`,
+        `https://www.immobilier.notaires.fr/fr/annonces-immobilieres-liste?page=3&parPage=100&departement=73&typeTransaction=VENTE,VNI,VAE,LOCATION`,
+      
+
+
     ];
 
     const annonces = await Promise.all(
@@ -89,48 +100,41 @@ async function fetchAnnonces() {
 
 module.exports = fetchAnnonces;
 
-async function saveAnnoncesToFile(annonces) {
-    const filePath = './annonces.json';
-    
+async function saveAnnoncesToDB(annonces) {
+    // Vider la collection avant d'ajouter de nouvelles annonces
+    await Annonce.deleteMany({});
+
     try {
-        let existingAnnonces = [];
-
-        // Si le fichier n'existe pas, créez-le avec les annonces actuelles.
-        if (!fs.existsSync(filePath)) {
-            fs.writeFileSync(filePath, JSON.stringify(annonces, null, 2), 'utf-8');
-            console.log('Fichier annonces.json créé avec les annonces actuelles.');
-        } else {
-            // Le fichier existe, lisez-le et comparez les annonces existantes avec les nouvelles.
-            const data = fs.readFileSync(filePath, 'utf-8');
-            existingAnnonces = JSON.parse(data);
-
-            if (JSON.stringify(existingAnnonces) !== JSON.stringify(annonces)) {
-                fs.writeFileSync(filePath, JSON.stringify(annonces, null, 2), 'utf-8');
-                console.log('Annonces mises à jour dans le fichier.');
-            } else {
-                console.log('Aucune mise à jour nécessaire.');
-            }
+        for (const annonceData of annonces) {
+            const uniqueIdentifier = { link: annonceData.link };
+            // findOneAndUpdate avec upsert:true va mettre à jour l'annonce si elle existe, sinon en créer une nouvelle
+            await Annonce.findOneAndUpdate(uniqueIdentifier, annonceData, { upsert: true });
         }
+        console.log('Annonces enregistrées ou mises à jour dans la base de données avec succès.');
     } catch (err) {
-        // Gérer les erreurs d'écriture/lecture.
-        console.error('Erreur lors de la manipulation du fichier:', err);
+        // Gérer les erreurs d'enregistrement.
+        console.error('Erreur lors de l\'enregistrement des annonces dans la base de données:', err);
     }
 }
+
 async function main() {
+    console.log("Début du scrapping");
     try {
         const annonces = await fetchAnnonces();
         console.log("Annonces récupérées :", annonces.length, "annonces");
-        await saveAnnoncesToFile(annonces); // Assurez-vous que cette opération est complétée avant de continuer
-        console.log('Scrapping terminé et fichier mis à jour.');
+        await saveAnnoncesToDB(annonces); // Sauvegarde dans MongoDB
+        console.log('Scrapping terminé et données enregistrées dans la base de données.');
     } catch (error) {
         console.error("Une erreur s'est produite lors du scrapping :", error);
-    } finally {
-        fs.writeFileSync('scrapping_done.flag', 'done'); // Marqueur de fin de scrapping
     }
+    console.log('Scrapping terminé.');
 }
+
 
 module.exports = {
     fetchAnnonces,
-    saveAnnoncesToFile,
-    main
+    saveAnnoncesToDB,
+    main // Assurez-vous d'inclure main ici si vous voulez l'utiliser en dehors de ce fichier
 };
+
+
