@@ -44,7 +44,7 @@ setInterval(() => {
     main().catch(error => {
         console.error('Erreur lors du scrapping:', error);
     });
-}, 180000); // toutes les 3 minutes
+}, 18000000); // toutes les 5 heures
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
