@@ -10,10 +10,15 @@ WORKDIR /usr/src/app
 
 # Copiez les fichiers package.json et package-lock.json pour l'installation des dépendances
 COPY package*.json ./
-RUN npm ci
+
+# Installez les dépendances, y compris PM2 globalement
+RUN npm ci && npm install pm2 -g
 
 # Copiez tout le contenu de votre projet dans le conteneur
 COPY . .
 
-# Commande par défaut pour exécuter votre application Node.js via npm start
-CMD [ "npm", "start" ]
+# Exposez le port sur lequel votre application va s'exécuter
+EXPOSE 3000
+
+# Commande pour exécuter votre application Node.js via PM2
+CMD [ "pm2-runtime", "start", "index.js" ]
