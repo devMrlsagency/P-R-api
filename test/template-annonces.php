@@ -30,6 +30,8 @@ get_header();  // Récupère l'en-tête du thème
             box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.02), 0px 14px 14px 0px rgba(0, 0, 0, 0.02), 0px 31px 18px 0px rgba(0, 0, 0, 0.01), 0px 55px 22px 0px rgba(0, 0, 0, 0.00), 0px 85px 24px 0px rgba(0, 0, 0, 0.00);
             padding: 20px;
             padding-bottom: 37px;
+            position: relative; 
+            margin-top: -44px;
         }
 
         .title-form {
@@ -56,9 +58,23 @@ get_header();  // Récupère l'en-tête du thème
             flex-shrink: 0;
             background: rgba(0, 154, 222, 0.20);
             border: none;
+            outline: none;
+            color:white;
         }
+        
+       
 
         .form h3 {
+            color: #FFF;
+            font-family: Inter;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 28px;
+            margin-bottom: 0px;
+            margin-top: 22px;
+        }
+         .form h4 {
             color: #FFF;
             font-family: Inter;
             font-size: 14px;
@@ -76,7 +92,20 @@ get_header();  // Récupère l'en-tête du thème
             font-style: italic;
             font-weight: 400;
             line-height: 20px;
-            margin-bottom: 22px;
+            padding-bottom: 22px;
+            
+        }
+        input {
+            border-radius:0px !important
+        }
+        
+        input[type="number"] {
+        color: white;
+        }
+
+        input[type="number"]:focus {
+        border: none;
+        outline: none;
         }
 
         label {
@@ -104,10 +133,12 @@ get_header();  // Récupère l'en-tête du thème
             width: 151px;
             height: 29px;
             flex-shrink: 0;
-            border: 0.3px solid #FFF;
+            border: 0,3px solid !important;
+            border-color: rgba(255, 255, 255, 0.36);
             background: #1B577D;
         }
-
+        
+       
         .group label {
             display: none;
         }
@@ -126,6 +157,37 @@ get_header();  // Récupère l'en-tête du thème
             margin-top: 33px;
             border: none;
         }
+        
+         .recherche:hover {
+            padding: 2px 20px;
+            border-radius: 10px;
+            background: #1C9AD7;
+            color: #FFF;
+            text-align: center;
+            font-family: Inter;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 28px;
+            margin-top: 33px;
+            border: none;
+        }
+        
+        .recherche:focus {
+            padding: 2px 20px;
+            border-radius: 10px;
+            background: #1C9AD7;
+            color: #FFF;
+            text-align: center;
+            font-family: Inter;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 28px;
+            margin-top: 33px;
+            border: none;
+            outline:none !important;
+        }
 
         #resetFilters {
             color: #FFF;
@@ -140,11 +202,60 @@ get_header();  // Récupère l'en-tête du thème
             border: none;
             margin-top: 9px;
         }
+        
+         #resetFilters:focus {
+            color: #FFF;
+            text-align: center;
+            font-family: Inter;
+            font-size: 12px;
+            font-style: italic;
+            font-weight: 400;
+            line-height: 24px;
+            text-decoration-line: underline;
+            background-color: transparent;
+            border: none;
+            margin-top: 9px;
+            outline:none !important;
+        }
 
         input[type="text"],
         input[type="number"] {
             padding-left: 10px;
         }
+        
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+         -webkit-appearance: none;
+           margin: 0;
+        }
+        
+          input#minSurface, input#maxSurface {
+          background-image: url('https://nota-developpement.com/wp-content/uploads/2023/12/m2.svg'); /* Chemin vers votre fichier SVG */
+         background-repeat: no-repeat;
+         background-position: 92%; /* ou 'left', selon la position souhaitée */
+          background-size: 20px 20px; /* Taille de l'icône */
+          padding-right: 25px; /* Ajuster pour éviter que le texte n'écrase l'icône */
+        }
+        
+           input#minPrice, input#maxPrice {
+          background-image: url('https://nota-developpement.com/wp-content/uploads/2023/12/E.svg'); /* Chemin vers votre fichier SVG */
+         background-repeat: no-repeat;
+         background-position: 92%; /* ou 'left', selon la position souhaitée */
+          background-size: 10px 24px; /* Taille de l'icône */
+          padding-right: 25px; /* Ajuster pour éviter que le texte n'écrase l'icône */
+        }
+     
+
+         input#localisationFilter {
+          background-image: url('https://nota-developpement.com/wp-content/uploads/2023/12/mingcute_search-line.svg'); /* Chemin vers votre fichier SVG */
+         background-repeat: no-repeat;
+         background-position: 96%; /* ou 'left', selon la position souhaitée */
+          background-size: 24px 24px; /* Taille de l'icône */
+          padding-right: 25px; /* Ajuster pour éviter que le texte n'écrase l'icône */
+        }
+     
+
+
 
         /* annonce bloc */
         #annonceCount {
@@ -184,22 +295,35 @@ get_header();  // Récupère l'en-tête du thème
         }
 
         .sort-dropdowns {
-            width: 249px;
+            width: 260px;
            
         }
 
         .sort-dropdowns label{
         display: none;
         }
+        .custom-select {
+         appearance: none;
+         background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIj4KICA8cGF0aCBkPSJNNSA2SDIwTTEwIDEySDIwTTE2IDE4SDIwIiBzdHJva2U9IiMxQzlBRDciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+Cjwvc3ZnPg==');
+        background-repeat: no-repeat;
+        background-position: right 10px top 50% ;
+        padding-left: 10px;
+            
+        }
 
         select {
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #224665;
+            background: #FFF;
+             outline:none !important;
+             border-radius:0px;
         }
+        
+      
 
         .annonce-card {
             margin-bottom: 20px;
-            flex: 0 32%;
+            flex: 0 29%;
             margin-top: 20px;
         }
         .annonce-card img {
@@ -256,7 +380,7 @@ get_header();  // Récupère l'en-tête du thème
         <div class="form">
             <h2 class="title-form">Affiner votre recherche</h2>
             <form id="filterForm">
-                <input type="text" id="localisationFilter" name="localisation" placeholder="Ville ou code postal"><br>
+                <input type="text" id="localisationFilter" name="localisation" placeholder="Ville ou code postal"> <br>
                 <h3>Transactions</h3>
                 <span>Sélectionner un type de transaction</span><br>
                 <div class="first-input">
@@ -292,7 +416,7 @@ get_header();  // Récupère l'en-tête du thème
                         </div>
                     </div>
                 </div>
-                <h3>Prix</h3>
+                <h4>Prix</h4>
                 <div class="group">
                     <div>
                         <label for="minPrice">Prix minimum :</label>
@@ -303,7 +427,7 @@ get_header();  // Récupère l'en-tête du thème
                         <input type="number" id="maxPrice" name="maxPrice" placeholder="Maximum">
                     </div>
                 </div>
-                <h3>Surface</h3>
+                <h4>Surface</h4>
                 <div class="group">
                     <div>
                         <label for="minSurface">Surface minimale (m²) :</label>
@@ -314,7 +438,7 @@ get_header();  // Récupère l'en-tête du thème
                         <input type="number" id="maxSurface" name="maxSurface" placeholder="Maximum">
                     </div>
                 </div>
-                <h3>Nombre de pièces</h3>
+                <h4>Nombre de pièces</h4>
                 <div class="group">
                     <div>
                         <label for="minPieces">Nombre de pièces minimum :</label>
@@ -340,7 +464,7 @@ get_header();  // Récupère l'en-tête du thème
                 </div>
                 <div class="sort-dropdowns">
                     <label for="sortSelect">Trier par : </label>
-                    <select id="sortSelect">
+                    <select id="sortSelect" class="custom-select">
                         <option value="recent">Trier par date la plus récente</option>
                         <option value="oldest">Trier par date la moins récente</option>
                         <option value="priceAsc"> Trier par prix croissant</option>
@@ -372,7 +496,7 @@ get_header();  // Récupère l'en-tête du thème
 
         async function loadAnnonces() {
             try {
-                const response = await fetch(`https://us1gcq.n0c.world/annonces`);
+                const response = await fetch(`https://api-immo-notaires.onrender.com/annonces`);
                 let annonces = await response.json();
 
                 const sortOrder = sortSelect.value; // Récupère la valeur de tri
