@@ -9,7 +9,7 @@ require('dotenv').config();
 const middlewares = require('./middlewares');
 const { main } = require('./scrapping');
 
-const Annonce = require('./models/annonce'); // Assurez-vous que le chemin est correct
+const Annonce = require('./models/annonce'); // Assurez-vous que le chemin est correct45
 
 const app = express();
 
