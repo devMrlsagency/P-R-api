@@ -39,12 +39,12 @@ app.get('/annonces', async (req, res) => {
 // Planification du scrapping toutes les 3 minutes
 // Planification du scrapping toutes les 3 minutes
 // Votre logique pour appeler main à intervalles réguliers
-setInterval(() => {
-    console.log('Lancement du scrapping à', new Date());
-    main().catch(error => {
-        console.error('Erreur lors du scrapping:', error);
-    });
-}, 18000000); // toutes les 5 heures
+// setInterval(() => {
+   // console.log('Lancement du scrapping à', new Date());
+   // main().catch(error => {
+    //    console.error('Erreur lors du scrapping:', error);
+  //  });
+//}, 18000000); // toutes les 5 heures
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
