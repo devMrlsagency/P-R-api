@@ -45,15 +45,18 @@ async function fetchAnnonces() {
             await page.goto(pageUrl, { timeout: 1200000 });
 
 
-            // Attendre que le popup de cookies soit visible et le refuser
             try {
+    const cookiePopup = await page.$('.tarteaucitronCTAButton.tarteaucitronDeny');
+    if (cookiePopup) {
+        await cookiePopup.click();
+        console.log("Popup de cookies géré.");
+    } else {
+        console.log("Pas de popup de cookies à gérer.");
+    }
+} catch (e) {
+    console.log("Erreur lors de la gestion du popup de cookies : ", e);
+}
 
-                await page.waitForSelector('.tarteaucitronCTAButton.tarteaucitronDeny', { timeout: 1200000 });
-                await page.click('.tarteaucitronCTAButton.tarteaucitronDeny');
-                console.log("Popup de cookies géré.");
-            } catch (e) {
-                console.log("Le popup de cookies n'est pas apparu ou le clic a échoué.");
-            }
             await page.waitForSelector('inotr-bloc-annonce', {timeout: 1200000}); // Attend jusqu'à 60 secondes.
 
 
